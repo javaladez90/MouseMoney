@@ -50,6 +50,6 @@ const chartConfig = {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, alignItems: 'center' },
+  container: { flex: 1, padding: 16, alignItems: 'center', backgroundColor: '#f0f2f5' },
   title: { fontSize: 20, fontWeight: 'bold', marginBottom: 16 },
 });

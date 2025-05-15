@@ -1,11 +1,10 @@
-// screens/AddPurchaseScreen.js
 import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { v4 as uuidv4 } from 'uuid';
+import uuid from 'react-native-uuid';
 import { PurchaseContext } from '../context/PurchaseContext';
 
-export default function AddPurchaseScreen({ navigation }) {
+export default function AddPurchase({ navigation }) {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('Food');
   const [park, setPark] = useState('Disneyland');
@@ -21,7 +20,7 @@ export default function AddPurchaseScreen({ navigation }) {
     }
 
     const newPurchase = {
-      id: uuidv4(),
+      id: uuid.v4(),
       title,
       category,
       park,
@@ -37,33 +36,94 @@ export default function AddPurchaseScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text>Title</Text>
-      <TextInput style={styles.input} value={title} onChangeText={setTitle} />
-      <Text>Amount</Text>
-      <TextInput style={styles.input} value={amount} onChangeText={setAmount} keyboardType="decimal-pad" />
-      <Text>Category</Text>
-      <Picker selectedValue={category} onValueChange={setCategory} style={styles.input}>
-        <Picker.Item label="Food" value="Food" />
-        <Picker.Item label="Merch" value="Merch" />
-        <Picker.Item label="Tickets" value="Tickets" />
-        <Picker.Item label="Other" value="Other" />
-      </Picker>
-      <Text>Park</Text>
-      <Picker selectedValue={park} onValueChange={setPark} style={styles.input}>
-        <Picker.Item label="Disneyland" value="Disneyland" />
-        <Picker.Item label="California Adventure" value="California Adventure" />
-        <Picker.Item label="Magic Kingdom" value="Magic Kingdom" />
-        <Picker.Item label="Epcot" value="Epcot" />
-        <Picker.Item label="Other" value="Other" />
-      </Picker>
-      <Text>Notes</Text>
-      <TextInput style={styles.input} value={notes} onChangeText={setNotes} />
+      <Text style={styles.label}>Title</Text>
+      <TextInput
+        value={title}
+        onChangeText={setTitle}
+        style={styles.input}
+        placeholder="e.g. Churro"
+      />
+
+      <Text style={styles.label}>Amount ($)</Text>
+      <TextInput
+        value={amount}
+        onChangeText={setAmount}
+        style={styles.input}
+        placeholder="e.g. 5.00"
+        keyboardType="decimal-pad"
+      />
+
+<Text style={styles.label}>Category</Text>
+<View style={styles.pickerWrapper}>
+  <Picker
+    selectedValue={category}
+    onValueChange={setCategory}
+    style={styles.picker}
+  >
+    <Picker.Item label="Food" value="Food" />
+    <Picker.Item label="Merch" value="Merch" />
+    <Picker.Item label="Tickets" value="Tickets" />
+    <Picker.Item label="Other" value="Other" />
+  </Picker>
+</View>
+
+<Text style={styles.label}>Park</Text>
+<View style={styles.pickerWrapper}>
+  <Picker
+    selectedValue={park}
+    onValueChange={setPark}
+    style={styles.picker}
+  >
+    <Picker.Item label="Disneyland" value="Disneyland" />
+    <Picker.Item label="California Adventure" value="California Adventure" />
+    <Picker.Item label="Magic Kingdom" value="Magic Kingdom" />
+    <Picker.Item label="Epcot" value="Epcot" />
+    <Picker.Item label="Other" value="Other" />
+  </Picker>
+</View>
+
+
+      <Text style={styles.label}>Notes (optional)</Text>
+      <TextInput
+        value={notes}
+        onChangeText={setNotes}
+        style={styles.input}
+        placeholder="e.g. Treat for kids"
+      />
+
       <Button title="Save Purchase" onPress={handleSubmit} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 16, flex: 1 },
-  input: { borderWidth: 1, borderColor: '#ccc', padding: 10, borderRadius: 6, marginBottom: 12 },
+  container: {
+    padding: 16,
+    flex: 1,
+  },
+  label: {
+    marginTop: 12,
+    marginBottom: 4,
+    fontWeight: 'bold',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 10,
+    borderRadius: 6,
+    marginBottom: 8,
+  },
+pickerWrapper: {
+  borderWidth: 1,
+  borderColor: '#ccc',
+  borderRadius: 6,
+  marginBottom: 12,
+  overflow: 'hidden',
+},
+picker: {
+  height: 50,
+  width: '100%',
+},
+
+
 });
